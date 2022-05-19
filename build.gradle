@@ -1,0 +1,52 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.4.31'
+    id "com.github.johnrengelman.shadow" version "5.1.0"
+}
+
+shadowJar {
+    relocate 'org.apache.http', 'hidden.org.apache.http'
+    relocate 'org.apache.logging', 'hidden.org.apache.logging'
+    relocate 'org.apache.commons.codec', 'hidden.org.apache.commons.codec'
+    relocate 'org.apache.commons.logging', 'hidden.org.apache.commons.logging'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'net.firzen.kotlin.eyesaver.MainKt'
+    }
+}
+
+group 'net.firzen.kotlin.eyesaver'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+
+    implementation 'com.luckycatlabs:SunriseSunsetCalculator:1.2'
+
+    // Joda time, Apache 2.0 license
+    implementation 'joda-time:joda-time:2.10.14'
+
+    // JSON-java library, https://github.com/stleary/JSON-java
+    // License: https://github.com/stleary/JSON-java/blob/master/LICENSE
+    // The Software shall be used for Good, not Evil.
+    implementation group: 'org.json', name: 'json', version: '20200518'
+
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
