@@ -5,7 +5,6 @@
 
 # Dependencies
 
-Redshift must be installed
-On debian run:
+Redshift must be installed. On debian run:
 
 `# apt install redshift`
