@@ -9,18 +9,22 @@ import kotlin.math.abs
 const val CONFIG_FILE = "/etc/eyesaver/config.json"
 
 fun main() {
-    val tempsMap = loadTemperaturesMap()
-
-    if(tempsMap == null) {
-        System.err.println("Unable to load config file from $CONFIG_FILE!")
-        return
-    }
-
     while(true) {
-        val currentTime = DateTime()
-        val currentTemp = computeScreenTemperature(currentTime.hourOfDay, currentTime.minuteOfHour, tempsMap)
+        try {
+            val tempsMap = loadTemperaturesMap()
 
-        setScreenTemperature(currentTemp)
+            if (tempsMap == null) {
+                System.err.println("Unable to load config file from $CONFIG_FILE!")
+            }
+            else {
+                val currentTime = DateTime()
+                val currentTemp = computeScreenTemperature(currentTime.hourOfDay, currentTime.minuteOfHour, tempsMap)
+
+                setScreenTemperature(currentTemp)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         sleep(60000)
     }
